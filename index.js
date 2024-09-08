@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 const productsRoute = require('./src/routes/product.route');
 const userRouter = require('./src/routes/user.route');
-const app = express()
 const cors = require('cors')
+const app = express()
 const URI = process.env.URI
 
 
