@@ -4,12 +4,14 @@ require('dotenv').config()
 const productsRoute = require('./src/routes/product.route');
 const userRouter = require('./src/routes/user.route');
 const app = express()
+const cors = require('cors')
 const URI = process.env.URI
 
 
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.use(cors('*'))
 
 
 // routes
