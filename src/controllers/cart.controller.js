@@ -7,7 +7,7 @@ const addCart = async (req,res)=>{
     try{
         const cart = await User.findByIdAndUpdate(
              id,
-            { userId: req.params.userId },
+            { userId: id },
         { $push: { items: items } },
         { new: true, upsert: true }
           );
