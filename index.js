@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 const productsRoute = require('./src/routes/product.route');
 const userRouter = require('./src/routes/user.route');
-const cors = require('cors')
+const cors = require('cors');
+const cartRoutes = require('./src/routes/cart.route');
 const app = express()
 const URI = process.env.URI
 
@@ -17,6 +18,7 @@ app.use(cors('*'))
 // routes
 app.use('/api', userRouter)
 app.use('/api', productsRoute)
+app.use('/api', cartRoutes)
 
 
 
