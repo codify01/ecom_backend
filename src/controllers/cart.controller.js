@@ -2,12 +2,12 @@ const User = require("../models/user.model");
 
 
 const addCart = async (req,res)=>{
-    const {pId,name,category,price,image,description,quatity} = req.body
+    const { items,pId,name,category,price,image,description,quatity} = req.body
     const { id } = req.params
     try{
         const cart = await User.findByIdAndUpdate(
              id,
-            { cart: {pId,name,category,price,image,description,quatity}},
+            { cart: items},
             { new: true, upsert: true }
           );
           console.log(cart);
