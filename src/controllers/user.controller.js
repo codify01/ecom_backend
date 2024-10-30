@@ -26,44 +26,46 @@ const registerUser = async (req, res) => {
     try {
         const { firstName, lastName, email, password, phoneNumber, role } = req.body;
 
-        // Check if email already exists
+        console.log("Incoming registration data:", req.body); // Log incoming data
+
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'User with this email already exists', status: false });
         }
 
-        // Create a new user without saving to database yet
         const newUser = new User({
             firstName,
             lastName,
             email,
-            password,  // Password hashing will be handled in User model
+            password,  
             phoneNumber,
             role
         });
 
-        // If an image is uploaded, process it to extract the face descriptor
         if (req.file) {
             const imgPath = path.join(__dirname, '../', req.file.path);
             const img = await canvas.loadImage(imgPath);
+            console.log("Image loaded successfully"); // Log image loading
             const result = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
-
+            
             if (result) {
-                // Store the face descriptor
                 newUser.faceDescriptor = result.descriptor;
+                console.log("Face descriptor extracted successfully"); // Log success
             } else {
+                console.error("No face detected in the image");
                 return res.status(400).json({ message: 'No face detected in the uploaded image', status: false });
             }
         }
 
-        // Save the new user to the database
         await newUser.save();
-
+        console.log("User registered successfully"); // Log user registration
         res.status(201).json({ message: 'User registered successfully', user: newUser, status: true });
     } catch (err) {
+        console.error("Error during registration:", err); // Log the error with detailed info
         res.status(500).json({ message: 'Error occurred during registration', error: err.message, status: false });
     }
 };
+
 
 // User login controller
 const loginUser = async (req, res) => {
