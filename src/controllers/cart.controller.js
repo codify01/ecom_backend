@@ -2,15 +2,10 @@ const Cart = require("../models/cart.model");
 
 
 const addCart = async (req,res)=>{
-    const { items,pId,name,category,price,image,description,quatity} = req.body
+    const { userId,productId,quantity} = req.body
     const { id } = req.params
     try{
-        const cart = await User.findByIdAndUpdate(
-             id,
-            { userId: id },
-        { $push: { items: items } },
-        { new: true, upsert: true }
-          );
+        const cart = await User.create(userId,productId,quantity)
           console.log(cart);
           
           res.json(cart)
