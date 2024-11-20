@@ -20,7 +20,9 @@ app.use('/api', userRouter)
 app.use('/api', productsRoute)
 app.use('/api', cartRoutes)
 
-
+app.get('/', (req, res)=>{
+    res.send('hello')
+})
 
 
 
