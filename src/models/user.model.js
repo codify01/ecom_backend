@@ -69,7 +69,15 @@ const userSchema = new mongoose.Schema({
   },
   updatedAt: {
     type: Date
-  }
+  },
+  resetPasswordToken: {
+    type: String,
+    default: null,
+  },
+  resetPasswordExpire: {
+    type: Date,
+    default: null,
+  },
 });
 
 // Hash the password before saving the user model
@@ -99,6 +107,11 @@ userSchema.pre("save", function (next) {
 // Compare input password with the stored hashed password
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// Check if reset token is valid
+userSchema.methods.isResetTokenValid = function () {
+  return this.resetPasswordToken && this.resetPasswordExpire > Date.now();
 };
 
 // Create the user model
