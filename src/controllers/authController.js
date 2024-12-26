@@ -26,7 +26,7 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     // Construct reset link (frontend route for resetting the password)
-    const resetURL = `https://ecom-iota-opal.vercel.app/reset-password/${resetToken}`;
+    const resetURL = `https://ecom-iota-opal.vercel.app/#/reset-password/${resetToken}`;
 
     // Send email
     const transporter = nodemailer.createTransport({
