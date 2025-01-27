@@ -82,7 +82,7 @@ const resetPassword = async (req, res) => {
     }
 
     // Update the password and clear the reset token fields
-    user.password = await bcrypt.hash(newPassword, 10);
+    // user.password = await bcrypt.hash(newPassword, 10);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 
